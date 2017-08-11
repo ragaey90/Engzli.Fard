@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EnzglyStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Catogries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="catogeryName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="itemName" Type="nvarchar" MaxLength="50" />
+          <Property Name="itemPrice" Type="int" />
+          <Property Name="itemsCount" Type="int" />
+          <Property Name="storeId" Type="int" />
+        </EntityType>
+        <EntityType Name="Stores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="storeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="storeAddresse" Type="nvarchar" MaxLength="50" />
+          <Property Name="storeDetails" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Items_Stores">
+          <End Role="Stores" Type="Self.Stores" Multiplicity="0..1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="storeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EnzglyStoreModelStoreContainer">
+          <EntitySet Name="Catogries" EntityType="Self.Catogries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stores" EntityType="Self.Stores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Items_Stores" Association="Self.FK_Items_Stores">
+            <End Role="Stores" EntitySet="Stores" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EnzglyStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Catogry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="catogeryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="itemPrice" Type="Int32" />
+          <Property Name="itemsCount" Type="Int32" />
+          <Property Name="storeId" Type="Int32" />
+          <NavigationProperty Name="Store" Relationship="EnzglyStoreModel.FK_Items_Stores" FromRole="Item" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="storeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="storeAddresse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="storeDetails" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Items" Relationship="EnzglyStoreModel.FK_Items_Stores" FromRole="Store" ToRole="Item" />
+        </EntityType>
+        <EntityContainer Name="EnzglyStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Catogries" EntityType="Self.Catogry" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Stores" EntityType="Self.Store" />
+          <AssociationSet Name="FK_Items_Stores" Association="EnzglyStoreModel.FK_Items_Stores">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Items_Stores">
+          <End Type="EnzglyStoreModel.Store" Role="Store" Multiplicity="0..1" />
+          <End Type="EnzglyStoreModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="storeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EnzglyStoreModelStoreContainer" CdmEntityContainer="EnzglyStoreEntities">
+          <EntitySetMapping Name="Catogries">
+            <EntityTypeMapping TypeName="EnzglyStoreModel.Catogry">
+              <MappingFragment StoreEntitySet="Catogries">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="catogeryName" ColumnName="catogeryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="EnzglyStoreModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="storeId" ColumnName="storeId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="itemPrice" ColumnName="itemPrice" />
+                <ScalarProperty Name="itemsCount" ColumnName="itemsCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="EnzglyStoreModel.Store">
+              <MappingFragment StoreEntitySet="Stores">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="storeName" ColumnName="storeName" />
+                <ScalarProperty Name="storeAddresse" ColumnName="storeAddresse" />
+                <ScalarProperty Name="storeDetails" ColumnName="storeDetails" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

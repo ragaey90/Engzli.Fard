@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EnzglyStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Catogry">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="catogeryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="itemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="itemPrice" Type="Int32" />
+    <Property Name="itemsCount" Type="Int32" />
+    <Property Name="storeId" Type="Int32" />
+    <NavigationProperty Name="Store" Relationship="EnzglyStoreModel.FK_Items_Stores" FromRole="Item" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="storeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="storeAddresse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="storeDetails" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Items" Relationship="EnzglyStoreModel.FK_Items_Stores" FromRole="Store" ToRole="Item" />
+  </EntityType>
+  <EntityContainer Name="EnzglyStoreEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Catogries" EntityType="Self.Catogry" />
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="Stores" EntityType="Self.Store" />
+    <AssociationSet Name="FK_Items_Stores" Association="EnzglyStoreModel.FK_Items_Stores">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Items_Stores">
+    <End Type="EnzglyStoreModel.Store" Role="Store" Multiplicity="0..1" />
+    <End Type="EnzglyStoreModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="storeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

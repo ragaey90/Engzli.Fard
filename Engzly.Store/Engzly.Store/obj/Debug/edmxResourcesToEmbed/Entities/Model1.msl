@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EnzglyStoreModelStoreContainer" CdmEntityContainer="EnzglyStoreEntities">
+    <EntitySetMapping Name="Catogries">
+      <EntityTypeMapping TypeName="EnzglyStoreModel.Catogry">
+        <MappingFragment StoreEntitySet="Catogries">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="catogeryName" ColumnName="catogeryName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="EnzglyStoreModel.Item">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="storeId" ColumnName="storeId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="itemName" ColumnName="itemName" />
+          <ScalarProperty Name="itemPrice" ColumnName="itemPrice" />
+          <ScalarProperty Name="itemsCount" ColumnName="itemsCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stores">
+      <EntityTypeMapping TypeName="EnzglyStoreModel.Store">
+        <MappingFragment StoreEntitySet="Stores">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="storeName" ColumnName="storeName" />
+          <ScalarProperty Name="storeAddresse" ColumnName="storeAddresse" />
+          <ScalarProperty Name="storeDetails" ColumnName="storeDetails" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
